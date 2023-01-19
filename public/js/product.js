@@ -13,7 +13,7 @@ $(document).ready(function () {
         },
         error: function (file, response) {
             //
-        }
+        },
     });
 });
 
@@ -23,20 +23,18 @@ function addVariant(event) {
 }
 
 function getCombination(arr, pre) {
-
-    pre = pre || '';
+    pre = pre || "";
 
     if (!arr.length) {
         return pre;
     }
 
     return arr[0].reduce(function (ans, value) {
-        return ans.concat(getCombination(arr.slice(1), pre + value + '/'));
+        return ans.concat(getCombination(arr.slice(1), pre + value + "/"));
     }, []);
 }
 
 function updateVariantPreview() {
-
     var valueArray = [];
 
     $(".select2-value").each(function () {
@@ -45,8 +43,7 @@ function updateVariantPreview() {
 
     var variantPreviewArray = getCombination(valueArray);
 
-
-    var tableBody = '';
+    var tableBody = "";
 
     $(variantPreviewArray).each(function (index, element) {
         tableBody += `<tr>
@@ -67,7 +64,6 @@ function updateVariantPreview() {
 }
 
 function addVariantTemplate() {
-
     $("#variant-sections").append(`<div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -97,7 +93,10 @@ function addVariantTemplate() {
                                 </div>
                             </div>`);
 
-    $(`#select2-option-${currentIndex}`).select2({placeholder: "Select Option", theme: "bootstrap4"});
+    $(`#select2-option-${currentIndex}`).select2({
+        placeholder: "Select Option",
+        theme: "bootstrap4",
+    });
 
     $(`#select2-value-${currentIndex}`)
         .select2({
@@ -105,16 +104,15 @@ function addVariantTemplate() {
             multiple: true,
             placeholder: "Type tag name",
             allowClear: true,
-            theme: "bootstrap4"
-
+            theme: "bootstrap4",
         })
-        .on('change', function () {
+        .on("change", function () {
             updateVariantPreview();
         });
 
     indexs.push(currentIndex);
 
-    currentIndex = (currentIndex + 1);
+    currentIndex = currentIndex + 1;
 
     if (indexs.length >= 3) {
         $("#add-btn").hide();
@@ -124,14 +122,13 @@ function addVariantTemplate() {
 }
 
 function removeVariant(event, element) {
-
     event.preventDefault();
 
     var jqElement = $(element);
 
-    var position = indexs.indexOf(jqElement.data('index'))
+    var position = indexs.indexOf(jqElement.data("index"));
 
-    indexs.splice(position, 1)
+    indexs.splice(position, 1);
 
     jqElement.parent().parent().parent().parent().remove();
 
@@ -143,4 +140,3 @@ function removeVariant(event, element) {
 
     updateVariantPreview();
 }
-
